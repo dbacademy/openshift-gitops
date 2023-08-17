@@ -7,6 +7,6 @@ spec:
   interval: 5m0s
   url: "https://github.com/dbacademy/openshift-gitops"
   ref:
-    branch: main
+    branch: master
   secretRef:
     name: git-access-auth
