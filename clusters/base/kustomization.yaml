@@ -1,0 +1,6 @@
+resources:
+        #  - ../base
+        #  - podinfo-kustomization.yaml
+        #  - podinfo-source.yaml
+  - git-pat-openshift-gitops.yaml
+  - git-repo-ocpenshift-gitops.yaml    
