@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: git-access-auth
+  namespace: flux-system
+type: Opaque
+data:
+  username: ZGJhY2FkZW15
+  password: Z2hwX1pBN0lrMGV2RmJsWVNmVnJDV2dlbUE4a2RmajBVSDFaSmJVRg==
