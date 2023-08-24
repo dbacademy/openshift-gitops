@@ -1,3 +1,4 @@
 resources:
   - podinfo-source.yaml
+  - podinfo-kustomization.yaml
  
