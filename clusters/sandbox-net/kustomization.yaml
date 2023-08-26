@@ -1,3 +1,4 @@
 resources:
-  - ../../app/podinfo
+        #  - ../../app/podinfo
   - ../base
+  - bootstrap-sandbox-net.yaml
