@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ocp-sandbox-net-cm
+  namespace: flux-system
+data: 
+  OCP_LOGSTASH_SERVER: ocpplatform.logstash-logs.volvocars.net:5045
+  OCP_CLUSTER_NAME: sandbox-net
+  OCP_CLUSTER_URL: "https://console-openshift-console.apps.sandbox-net.sandbox.volvocars.net"
