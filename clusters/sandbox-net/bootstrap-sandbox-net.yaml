@@ -1,0 +1,16 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: bootstrap-ocp-services-sandbox-net
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./releases/sandbox-net"
+  sourceRef:
+    kind: GitRepository
+    name: git-repo-openshift-gitops
+  prune: true
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: ocp-sandbox-net-cm
