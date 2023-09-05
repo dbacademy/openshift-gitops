@@ -5,6 +5,6 @@ resources:
 - filebeat-ns.yaml
 - filebeat-sa.yaml
 - filebeat-scc.yaml  
-- filebeat-configmap.yml
-- filebeat-daemonset.yml
+- filebeat-configmap.yaml
+- filebeat-daemonset.yaml
   #- filebeat-daemonset.yml
