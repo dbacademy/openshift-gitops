@@ -2,7 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: filebeat-config
-  namespace: openshift-logging
+  namespace: ocp-logging
   labels:
     k8s-app: filebeat
 data:
@@ -49,4 +49,4 @@ data:
        username: "filebeat"
        password: "filebeat"
     fields:
-      cluster: "${OCP_CLUSTER_NAME}"
+      cluster: ${OCP_CLUSTER_NAME}
