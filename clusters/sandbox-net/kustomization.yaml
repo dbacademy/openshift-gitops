@@ -1,4 +1,4 @@
 resources:
         #  - ../../app/podinfo
   - ../base
-  - bootstrap-sandbox-net.yaml
+    #  - bootstrap-sandbox-net.yaml
