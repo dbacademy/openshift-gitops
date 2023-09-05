@@ -14,3 +14,4 @@ spec:
     substituteFrom:
       - kind: ConfigMap
         name: ocp-sandbox-net-cm
+        optional: true
