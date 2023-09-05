@@ -49,4 +49,4 @@ data:
        username: "filebeat"
        password: "filebeat"
     fields:
-      cluster: ${OCP_CLUSTER_NAME}
+      cluster: "${OCP_CLUSTER_NAME}"
