@@ -45,8 +45,8 @@ data:
       - add_cloud_metadata:
       - add_host_metadata:
     output.logstash:
-       hosts: ["${ICOE_LOGSTASH_OCP_SERVER}"]
+       hosts: ["${OCP_LOGSTASH_SERVER}"]
        username: "filebeat"
        password: "filebeat"
     fields:
-      cluster: ${APP_CLUSTER}
+      cluster: ${OCP_CLUSTER_NAME}
