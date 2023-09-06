@@ -4,5 +4,5 @@ For FluxCD testing
 ## Unstall Flux system 
 
 ```bash
-flux uninstall --namespace=infra --keep-namespace
+flux uninstall --namespace=flux-system --keep-namespace
 ```
