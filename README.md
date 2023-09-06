@@ -35,10 +35,10 @@ flux get kustomization
 oc get gitrepository
 oc get kustomization
 oc get gitrepository
-flux reconcile source git icoe-mq-k8s-services
+flux reconcile source git <repo_name>
 flux reconcile source git flux-system
 oc get kustomization
-flux reconcile kustomization bootstrap-mq-services-aro-prod
+flux reconcile kustomization <kustomization_name>
 flux reconcile source git icoe-mq-k8s-services
 flux reconcile kustomization bootstrap-mq-services-aro-prod
 ````
