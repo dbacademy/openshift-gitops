@@ -1,6 +1,8 @@
 ## Objective
 Implenet GitOps way of infrastructure provesioning using FluxCD
 
+For detail documentation please follow https://fluxcd.io/flux/
+
 ### Bootstraping for Sandbox cluster 
 
 Get the repo PAT and owner details and set the environment variable according as below.
