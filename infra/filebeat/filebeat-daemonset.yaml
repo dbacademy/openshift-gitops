@@ -2,7 +2,7 @@ kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: filebeat
-  namespace: openshift-logging
+  namespace: ocp-logging
   labels:
     k8s-app: filebeat
 spec:
