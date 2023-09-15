@@ -1,0 +1,9 @@
+# components:
+# - ../../configurations/global
+
+resources:
+  - ../base
+    # - ../../configurations/securityconstraintscontext/aro-prod
+    #- ../../configurations/flux-notifications
+    #  - ../../services/argo-cd
+    #  - ../../configurations/argo-cd

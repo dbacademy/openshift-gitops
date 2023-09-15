@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ocp-rnd-icp-cm
+  namespace: flux-system
+data:
+  FILEBEAT_NAMESPACE: ocp-logging        
+  OCP_LOGSTASH_SERVER: ocpplatform.logstash-logs.volvocars.net:5045
+  OCP_CLUSTER_NAME: rnd-icp
+  OCP_CLUSTER_URL: "https://console-openshift-console.apps.rnd-icp.volvocars.net"
