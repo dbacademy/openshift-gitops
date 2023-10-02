@@ -1,0 +1,4 @@
+resources:
+  - ../base
+  - ocp-shared-azureocp-nonprod-cm.yaml
+  - bootstrap-shared-azureocp-nonprod.yaml

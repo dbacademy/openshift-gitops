@@ -55,7 +55,8 @@ spec:
               readOnly: true
               mountPath: /var/log
           terminationMessagePolicy: File
-          image: 'docker.elastic.co/beats/filebeat:8.5.1'
+          #image: 'docker.elastic.co/beats/filebeat:8.5.1'
+          image: 'docker.elastic.co/beats/filebeat:${FILEBEAT_VERSION}'
           args:
             - '-c'
             - /etc/filebeat.yml
