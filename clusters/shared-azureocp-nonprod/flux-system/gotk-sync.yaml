@@ -20,7 +20,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./clusters/sandbox-net
+  path: ./clusters/shared-azureocp-nonprod
   prune: true
   sourceRef:
     kind: GitRepository
