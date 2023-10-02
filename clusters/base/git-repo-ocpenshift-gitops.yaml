@@ -9,4 +9,4 @@ spec:
   ref:
     branch: master
   secretRef:
-    name: bearer-access-auth
+    name: git-access-auth
