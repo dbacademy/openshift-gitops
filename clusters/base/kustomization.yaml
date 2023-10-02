@@ -1,4 +1,5 @@
 resources:
   - git-bearer-openshift-gitops.yaml
     #  - git-pat-openshift-gitops.yaml
-  - git-repo-ocpenshift-gitops.yaml    
+  - git-repo-ocpenshift-gitops.yaml
+  - git-demo-repo-yaml
