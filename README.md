@@ -44,3 +44,7 @@ flux reconcile kustomization <kustomization_name>
 flux reconcile source git icoe-mq-k8s-services
 flux reconcile kustomization bootstrap-mq-services-aro-prod
 ````
+
+###Know Error 
+- gitrepository/git-repo-openshift-gitops                         False           False   failed to checkout and determine revision: unable to clone 'https://github.com/dbacademy/openshift-gitops': authentication required
+
