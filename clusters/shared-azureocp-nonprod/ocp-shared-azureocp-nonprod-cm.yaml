@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 data:
   FILEBEAT_NAMESPACE: ocp-logging
-  FILEBEAT_VERSION: 8.5.1 
+  FILEBEAT_VERSION: 8.5.3 
   OCP_LOGSTASH_SERVER: peps.logstash-logs.volvocars.net:5048
   OCP_CLUSTER_NAME: shared-azureocp-nonprod
   OCP_CLUSTER_URL: "https://console-openshift-console.apps.shared-azureocp-nonprod.volvocars.biz"
