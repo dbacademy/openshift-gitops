@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m0s
-  url: https://github.com/dbacademy/openshift-gitops.git
+  url: "https://github.com/dbacademy/openshift-gitops.git"
   ref:
     branch: master
   secretRef:
