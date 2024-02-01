@@ -1,4 +1,4 @@
 resources:
- # - ../base
+  - ../base
   - ocp-sandbox-net-cm.yaml
   #- bootstrap-sandbox-net.yaml
