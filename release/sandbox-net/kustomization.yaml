@@ -2,7 +2,7 @@
 # - ../../configurations/global
 
 resources:
-  - ../base
+#  - ../base
     # - ../../configurations/securityconstraintscontext/aro-prod
     #- ../../configurations/flux-notifications
     #  - ../../services/argo-cd
