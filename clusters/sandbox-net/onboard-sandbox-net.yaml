@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: "./namespace/sandbox-net"
+  path: "./namespaces/sandbox-net"
   sourceRef:
     kind: GitRepository
     name: git-repo-openshift-gitops
