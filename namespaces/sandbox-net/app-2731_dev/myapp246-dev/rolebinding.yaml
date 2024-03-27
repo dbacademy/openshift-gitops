@@ -5,7 +5,7 @@ metadata:
   namespace: myapp246-dev
 subjects:
 - kind: Group
-  name:    
+  name: cld-myapp246-sg   
 roleRef:
   kind: ClusterRole
   name: admin
