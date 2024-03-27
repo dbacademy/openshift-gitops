@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: vidaadm-test-rb
+  namespace: vidaadm-test
+subjects:
+- kind: Group
+  name: cld-vidaadmin-sg   
+roleRef:
+  kind: ClusterRole
+  name: admin
