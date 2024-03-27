@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: myapp246-dev-rb
+  namespace: myapp246-dev
+subjects:
+- kind: Group
+  name:    
+roleRef:
+  kind: ClusterRole
+  name: admin
