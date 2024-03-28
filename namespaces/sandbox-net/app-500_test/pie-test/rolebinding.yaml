@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pie-test-rb
+  namespace: pie-test
+subjects:
+- kind: Group
+  name: cld-pieadmin-sg   
+roleRef:
+  kind: ClusterRole
+  name: admin

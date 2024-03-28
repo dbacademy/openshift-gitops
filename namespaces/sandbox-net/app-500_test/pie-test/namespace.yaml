@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: pie-test
+    kustomize.toolkit.fluxcd.io/prune: disabled
+    name: pie-test
+  name: pie-test
