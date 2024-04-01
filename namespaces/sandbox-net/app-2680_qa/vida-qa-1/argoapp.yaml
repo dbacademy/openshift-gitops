@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: guestbook
-    repoURL: https://https://github.com/argoproj/argocd-example-apps.git
+    repoURL: https://github.com/argoproj/argocd-example-apps.git
     targetRevision: HEAD
   syncPolicy:
     automated:
