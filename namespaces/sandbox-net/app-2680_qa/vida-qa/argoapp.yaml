@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 
-    repoURL: https://
-    targetRevision: 
+    path: vida-qa/manifests
+    repoURL: https://github.com/volvo-cars/vida.git
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
