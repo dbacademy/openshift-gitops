@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-app-1-argoapp 
+  namespace: argocd
+spec:
+  destination:
+    namespace: demo-app-1
+    server: https://kubernetes.default.svc
+  project: demo-app-1-appproject
+  source:
+    path: demo-app
+    repoURL: https://github.com/dbacademy/demo-app.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
