@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: demo-app-1-appproject
   source:
-    path: demo-app
+    path: welcome-php
     repoURL: https://github.com/dbacademy/demo-app.git
     targetRevision: HEAD
   syncPolicy:
