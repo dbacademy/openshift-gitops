@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vida-qa-10-argoapp 
+  namespace: argocd
+spec:
+  destination:
+    namespace: vida-qa-10
+    server: https://kubernetes.default.svc
+  project: vida-qa-10-appproject
+  source:
+    path: vida-qa/manifest
+    repoURL: https://github.com/volvo-cars/vida.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
