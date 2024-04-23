@@ -1,0 +1,13 @@
+
+memory_limits: 500m
+memory_requests: 500m
+cpu_limits: 2Gi
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: demoapp-10-resourcequota
+spec:
+  hard:
+    limits.memory: 
+    requests.cpu: 
+    requests.memory: 
