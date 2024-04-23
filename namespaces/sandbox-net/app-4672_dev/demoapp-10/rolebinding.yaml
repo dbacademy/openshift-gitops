@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: demoapp-10-rb
+  namespace: demoapp-10
+subjects:
+- kind: Group
+  name: cld-openshift-clusteradmin-sg   
+roleRef:
+  kind: ClusterRole
+  name: admin
