@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: demoapp-qa
+    kustomize.toolkit.fluxcd.io/prune: disabled
+    name: demoapp-qa
+  name: demoapp-20
