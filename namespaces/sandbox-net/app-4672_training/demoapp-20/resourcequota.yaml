@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: demoapp-20-resourcequota
+  namespace: demoapp-20
+spec:
+  hard:        
+    limits.memory: 2Gi
+    requests.cpu: 1
+    requests.memory: 1Gi
