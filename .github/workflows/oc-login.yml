@@ -1,0 +1,24 @@
+name: oc-login Example
+on:
+
+  workflow_dispatch:
+
+jobs:
+  login:
+    name: OpenShift Login and Test
+    runs-on: ocp-self-hosted
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4  
+    
+      - name: Log in and set context  
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          
+      - name: Create/Update ArgoCD app    
+        run: |
+          oc get nodes
