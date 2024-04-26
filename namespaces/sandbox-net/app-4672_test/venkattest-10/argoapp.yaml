@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: venkattest-10
+    namespace: app-4672-venkattest-10
     server: https://kubernetes.default.svc
   project: venkattest-10-appproject
   source:
