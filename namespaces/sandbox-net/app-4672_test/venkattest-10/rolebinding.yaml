@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: venkattest-10-rb
-  namespace: venkattest-10
+  namespace: app-4672-venkattest-10
 subjects:
 - kind: Group
   name: cld-openshift-prod-clusteradmin-sg   
