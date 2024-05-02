@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ocptest-10-rb
+  namespace: app-4672-ocptest-10
+subjects:
+- kind: Group
+  name: cld-openshift-prod-clusteradmin-sg   
+roleRef:
+  kind: ClusterRole
+  name: admin
