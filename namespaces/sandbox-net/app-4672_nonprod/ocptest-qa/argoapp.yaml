@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ocptest-qa-argoapp 
+  namespace: argocd
+spec:
+  destination:
+    namespace: app-4672-ocptest-qa
+    server: https://kubernetes.default.svc
+  project: ocptest-qa-appproject
+  source:
+    path: welcome-php
+    repoURL: https://github.com/dbacademy/demo-app.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
