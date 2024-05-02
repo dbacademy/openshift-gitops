@@ -5,7 +5,7 @@ metadata:
   namespace: app-4672-ocptest-qa
 subjects:
 - kind: Group
-  name: cld-openshift-prod-clusteradmin-sg   
+  name: cld-openshift-clusteradmin-sg   
 roleRef:
   kind: ClusterRole
   name: admin
