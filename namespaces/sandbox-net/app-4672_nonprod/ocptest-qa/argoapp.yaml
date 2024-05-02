@@ -9,8 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: ocptest-qa-appproject
   source:
-    path: welcome-php
-    repoURL: https://github.com/dbacademy/demo-app.git
+    path: vida-test/manifest
+    repoURL: https://github.com/volvo-cars/vida.git
     targetRevision: HEAD
   syncPolicy:
     automated:
