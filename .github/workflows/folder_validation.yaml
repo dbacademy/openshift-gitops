@@ -1,0 +1,46 @@
+
+name: Pull_request_details
+
+on: 
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  get_pull_request_details:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get Master Branch
+        id: master_branch
+        run: |
+          MASTER_BRANCH=$(curl -s -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/branches/master | jq -r '.name')
+          echo "::set-output name=master_branch::$MASTER_BRANCH"
+          echo "$MASTER_BRANCH"
+
+      - name: Extract pull request number
+        id: extract_pr_number
+        run: |
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo "The pull request number is $PR_NUMBER"
+
+      - name: Get Pull Request Details
+        id: pr_details
+        run: |
+          pull_requests=$(curl -s -H 'Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files | jq -r '.[].filename')
+          echo "::set-output name=pull_requests::$pull_requests"
+          echo "$pull_requests"
+    
+      - name: Check if PR folder/files exists
+        run: |
+          master_branch="${{ steps.main_branch.outputs.main_branch }}"
+          for path in "${{ steps.pr_details.outputs.pull_requests }}"; do
+            result=$(curl -s -H 'Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/contents/$path?ref=$master_branch)
+            echo "$result"
+             if echo "$result" | jq -e '.message' ; then
+              echo "$path does not exists in the master branch."
+            else
+              echo "$path exists in the master branch."
+            fi
+          done
