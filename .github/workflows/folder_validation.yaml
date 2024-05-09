@@ -1,8 +1,11 @@
-name: Pull_request_details
+name: Validate namespace request
 
 on: 
+  # Triggers the workflow when namespace request raised 
+  # Run the workflow only on "master" branch
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [opened,edited]
+    branches: [master]
 
 jobs:
   get_pull_request_details:
@@ -60,9 +63,9 @@ jobs:
           PR_NUMBER="${{ steps.extract_pr_number.outputs.PR_NUMBER }}"
           FOLDER_NAME="${{ steps.pr_details.outputs.pull_requests_directory_path }}"
           if [ "${{ steps.check_folder.outputs.folder_exists }}" == 'true' ]; then
-            COMMENT="The folder '$FOLDER_NAME' exists in the master branch."
+            COMMENT="Folder '$FOLDER_NAME' already exists, namespace is already available into the cluster.. continue ??."
           else
-            COMMENT="The folder '$FOLDER_NAME' does not exist in the master branch."
+            COMMENT="Folder '$FOLDER_NAME' does not exist, new Namespace request."
           fi
           echo "Adding comment to pull request $PR_NUMBER: $COMMENT"
           curl -X POST -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" -d "{\"body\": \"$COMMENT\"}" "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" > /dev/null 2>&1
