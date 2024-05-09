@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: venkattest-20-argoapp 
+  namespace: argocd
+spec:
+  destination:
+    namespace: app-4672-venkattest-20
+    server: https://kubernetes.default.svc
+  project: venkattest-20-appproject
+  source:
+    path: welcome-php
+    repoURL: https://github.com/dbacademy/demo-app.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false

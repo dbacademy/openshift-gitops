@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: venkattest-20-rb
+  namespace: app-4672-venkattest-20
+subjects:
+- kind: Group
+  name: cld-openshift-prod-clusteradmin-sg   
+roleRef:
+  kind: ClusterRole
+  name: admin
