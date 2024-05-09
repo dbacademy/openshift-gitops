@@ -1,8 +1,6 @@
-
 name: Pull_request_details
 
 on: 
-  workflow_dispatch:
   pull_request:
     types: [opened, reopened, synchronize]
 
@@ -13,42 +11,58 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Get Master Branch
+      - name: Get master Branch
         id: master_branch
         run: |
-          MASTER_BRANCH=$(curl -s -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/branches/master | jq -r '.name')
-          echo "::set-output name=master_branch::$MASTER_BRANCH"
-          echo "$MASTER_BRANCH"
+          master_BRANCH=$(curl -s -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/branches/master | jq -r '.name')
+          echo "::set-output name=master_branch::$master_BRANCH"
+          echo "$master_BRANCH"
 
       - name: Extract pull request number
         id: extract_pr_number
         run: |
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo "The pull request number is $PR_NUMBER"
+          echo "::set-output name=PR_NUMBER::$PR_NUMBER"
 
       - name: Get Pull Request Details
         id: pr_details
         run: |
           pull_requests=$(curl -s -H 'Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files | jq -r '.[].filename')
+          echo "Files in the pull request:"
           echo "$pull_requests"
-          for filepath in "${pull_requests[@]}"; do
+          for filepath in $pull_requests; do
             directory_path=$(dirname "$filepath")
-            echo "$directory_path"
           done
+          echo "The folder path for the pull request files is $directory_path"
           echo "::set-output name=pull_requests_directory_path::$directory_path"
     
       - name: Check if PR folder/files exists
+        id: check_folder
         run: |
           master_branch="${{ steps.master_branch.outputs.master_branch }}"
           directory_path="${{ steps.pr_details.outputs.pull_requests_directory_path }}"
-          echo "$directory_path"
-            response=$(curl -s -w "\n%{http_code}" -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/contents/$directory_path?ref=$master_branch")
-            response_code=$(echo "$response" | tail -n 1)
-            echo "$response"
-            if [ "$response_code" -eq 200 ]; then
-               echo "$directory_path exists in the master branch."
-            elif [ "$response_code" -eq 404 ]; then
-               echo "$directory_path does not exist in the master branch."
-           else
-               echo "Error: Unexpected response code $response_code"
-            fi  
+          echo "Validating Directory path: $directory_path in master branch"
+          response=$(curl -s -w "\n%{http_code}" -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/contents/$directory_path?ref=$master_branch")
+          response_code=$(echo "$response" | tail -n 1)
+          if [ "$response_code" -eq 200 ]; then
+             echo "::set-output name=folder_exists::true"
+             echo "$directory_path exists in the master branch."
+          elif [ "$response_code" -eq 404 ]; then
+             echo "::set-output name=folder_exists::false"
+             echo "$directory_path does not exist in the master branch."
+          else
+             echo "Error: Unexpected response code $response_code"
+          fi
+
+      - name: Add comment to pull request
+        run: |
+          PR_NUMBER="${{ steps.extract_pr_number.outputs.PR_NUMBER }}"
+          FOLDER_NAME="${{ steps.pr_details.outputs.pull_requests_directory_path }}"
+          if [ "${{ steps.check_folder.outputs.folder_exists }}" == 'true' ]; then
+            COMMENT="The folder '$FOLDER_NAME' exists in the master branch."
+          else
+            COMMENT="The folder '$FOLDER_NAME' does not exist in the master branch."
+          fi
+          echo "Adding comment to pull request $PR_NUMBER: $COMMENT"
+          curl -X POST -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" -d "{\"body\": \"$COMMENT\"}" "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" > /dev/null 2>&1
