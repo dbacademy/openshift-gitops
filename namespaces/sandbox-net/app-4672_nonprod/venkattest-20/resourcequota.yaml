@@ -5,6 +5,6 @@ metadata:
   namespace: app-4672-venkattest-20
 spec:
   hard:
-    limits.memory: 500m
+    limits.memory: 1Gi
     requests.cpu: 500m
-    requests.memory: 250m
+    requests.memory: 500m
