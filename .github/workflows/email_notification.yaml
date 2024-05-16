@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo The PR was merged
+        curl -vk telnet://10.120.98.70:25
   
   email_notification:
     runs-on: ubuntu-latest
@@ -21,8 +21,8 @@ jobs:
     - name: Send Email
       uses: dawidd6/action-send-mail@v3
       with:
-        server_address:  smtp.gmail.com
-        server_port: 465
+        server_address:  10.120.98.70
+        server_port: 25
         subject: Github Actions job for email test
         to: dbiswas@volvocars.com
         from: Deb Biswas
