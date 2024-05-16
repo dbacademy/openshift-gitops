@@ -6,7 +6,7 @@ on:
 jobs:
   login:
     name: OpenShift Login and Test
-    runs-on: ocp-self-hosted
+    runs-on: openshift-selfhosted-runner
 
     steps:
       - name: Check out the repo
