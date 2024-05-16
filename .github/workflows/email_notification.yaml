@@ -8,15 +8,14 @@ on:
   workflow_dispatch:     
 
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
+  test_connection:
     runs-on: ubuntu-latest
     steps:
     - run: |
         curl -vk telnet://10.120.98.70:25
   
   email_notification:
-    needs: if_merged
+    needs: test_connection
     runs-on: ubuntu-latest
     steps:
     - name: Send Email
