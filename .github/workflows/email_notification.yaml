@@ -16,6 +16,7 @@ jobs:
         curl -vk telnet://10.120.98.70:25
   
   email_notification:
+    needs: if_merged
     runs-on: ubuntu-latest
     steps:
     - name: Send Email
