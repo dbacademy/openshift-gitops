@@ -21,7 +21,7 @@ jobs:
         to: dbiswas@volvocars.com
         cc: jon.nordgren@volvocars.com
         from: ocponboarding@volvocars.com
-        body: You have notification for ${{github.event.pull_request.title}}, To approve or reject please check ${{github.event.pull_request.url}} or https://github.com/dbacademy/openshift-gitops/pull/${{github.event.pull_request.number}}
+        body: You have notification for ${{github.event.pull_request.title}}, To approve or reject please check https://github.com/dbacademy/openshift-gitops/pull/${{github.event.pull_request.number}}
 
 #  Telnet-check:
 #          name: Telnet test
