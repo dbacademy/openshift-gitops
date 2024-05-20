@@ -8,15 +8,22 @@ on:
   workflow_dispatch:     
 
 jobs:
-  email_notification:
-    runs-on: vcc-azure-ubuntu-latest
-    steps:
-    - name: Send Email
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address:  10.120.98.70
-        server_port: 25
-        subject: Github Actions job for email test
-        to: dbiswas@volvocars.com
-        from: Deb Biswas
-        body: Email test job of ${{github.repository}}
+#  email_notification:
+#    steps:
+#    - name: Send Email
+#      uses: dawidd6/action-send-mail@v3
+#      with:
+#        server_address:  10.120.98.70
+#        server_port: 25
+#        subject: Github Actions job for email test
+#        to: dbiswas@volvocars.com
+#        from: Deb Biswas
+#        body: Email test job of ${{github.repository}}
+
+  Telnet-check:
+          name: Telnet test
+          runs-on: vcc-azure-ubuntu-latest
+          steps:
+            -  name: Telnet
+               run: |
+                curl -vk telnet://10.120.98.70:25
