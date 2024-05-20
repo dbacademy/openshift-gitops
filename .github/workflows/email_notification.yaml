@@ -22,7 +22,7 @@ jobs:
 
   Telnet-check:
           name: Telnet test
-          runs-on: vcc-azure-ubuntu-latest
+          runs-on: openshift-selfhosted-runner
           steps:
             -  name: Telnet
                run: |
