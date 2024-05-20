@@ -8,22 +8,8 @@ on:
   workflow_dispatch:     
 
 jobs:
-  test_ip:
-    runs-on: ubuntu-latest
-    steps:
-    - run: |
-        ip -a
-        
-  test_connection:
-    needs: [test_ip]
-    runs-on: ubuntu-latest
-    steps:
-    - run: |
-        curl -vk telnet://10.120.98.70:25
-  
   email_notification:
-    needs: test_connection
-    runs-on: ubuntu-latest
+    runs-on: vcc-azure-ubuntu-latest
     steps:
     - name: Send Email
       uses: dawidd6/action-send-mail@v3
