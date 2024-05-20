@@ -20,7 +20,7 @@ jobs:
         subject: ${{github.event.pull_request.title}} by ${{github.actor}}
         to: dbiswas@volvocars.com
         cc: jon.nordgren@volvocars.com
-        from: ocponboarging@volvocars.com
+        from: ocponboarding@volvocars.com
         body: You have notification for ${{github.event.pull_request.title}}, check ${{github.event.pull_request.url}} and https://github.com/dbacademy/openshift-gitops/pull/${{github.event.pull_request.number}}
 
 #  Telnet-check:
