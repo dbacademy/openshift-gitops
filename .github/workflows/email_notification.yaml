@@ -22,10 +22,10 @@ jobs:
         from: Deb Biswas
         body: Email test job of ${{github.repository}}
 
-  Telnet-check:
-          name: Telnet test
-          runs-on: openshift-selfhosted-runner
-          steps:
-            -  name: Telnet
-               run: |
-                curl -vk telnet://10.120.98.70:25
+#  Telnet-check:
+#          name: Telnet test
+#          runs-on: openshift-selfhosted-runner
+#          steps:
+#            -  name: Telnet
+#               run: |
+#                curl -vk telnet://10.120.98.70:25
