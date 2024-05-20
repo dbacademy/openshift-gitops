@@ -17,10 +17,10 @@ jobs:
       with:
         server_address:  10.120.98.70
         server_port: 25
-        subject: Github Actions job for email test
+        subject: ${{github.event.pull_request.title}}
         to: dbiswas@volvocars.com
-        from: Deb Biswas
-        body: Email test job of ${{github.repository}}
+        from: ocpadmin@volvocars.com
+        body: You have notification for ${{github.event.pull_request.title}}, check https://github.com/dbacademy/openshift-gitops/pull/${{github.event.pull_request.number}}
 
 #  Telnet-check:
 #          name: Telnet test
