@@ -1,0 +1,42 @@
+name: Check PR Merged Status
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  check-pr-merged:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if pull request was merged
+      id: check_pr_merged
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          return pr.merged ? 'merged' : 'not_merged';
+          
+    - name: Set up environment variables
+      run: |
+        BRANCH=${{ github.event.pull_request.head.ref }}
+        MERGE_STATUS=${{ steps.check_pr_merged.outputs.result }}
+        echo "BRANCH=$BRANCH" >> $GITHUB_ENV
+        echo "MERGE_STATUS=$MERGE_STATUS" >> $GITHUB_ENV
+
+    - name: Output result
+      run: |
+        echo "The pull request was $MERGE_STATUS."
+
+
+    - name: Deleting Branch if merged
+      run: |
+          #echo "$BRANCH"
+          #echo "$MERGE_STATUS"
+          if [ "$MERGE_STATUS" == 'merged' ]; then
+            echo "Branch is $MERGE_STATUS....Deleting branch $BRANCH."
+          else
+            echo "Branch $BRANCH is $MERGE_STATUS....Deleting branch $BRANCH."
+          fi
+          curl -X DELETE -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/git/refs/heads/$BRANCH
