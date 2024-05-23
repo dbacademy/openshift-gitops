@@ -18,13 +18,14 @@ jobs:
         server_address:  10.120.98.70
         server_port: 25
         subject: ${{github.event.pull_request.title}} by ${{github.actor}}
-        #to: dbiswas@volvocars.com
-        to: stabassu@volvocars.com
-        #cc: jon.nordgren@volvocars.com
+        to: dbiswas@volvocars.com
+        #to: stabassu@volvocars.com
+        cc: jon.nordgren@volvocars.com
         from: ocponboarding@volvocars.com
         body: |
           hi
-          You have notification for ${{github.event.pull_request.title}}, To approve or reject please check https://github.com/dbacademy/openshift-gitops/pull/${{github.event.pull_request.number}}
+          You have notification for ${{github.event.pull_request.title}} 
+          To approve or reject please check https://github.com/dbacademy/openshift-gitops/pull/${{github.event.pull_request.number}}
 
 #  Telnet-check:
 #          name: Telnet test
