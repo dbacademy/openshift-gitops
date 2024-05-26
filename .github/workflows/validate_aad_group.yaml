@@ -15,21 +15,22 @@ jobs:
     name: Get the AAD group
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    env:
-      AZURE_SERVICE_PRINCIPAL_ID: ${{ secrets.AZURE_SERVICE_PRINCIPAL_ID }}
-      AZURE_SERVICE_PRINCIPAL_SECRET: ${{ secrets.AZURE_SERVICE_PRINCIPAL_SECRET }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    #env:
+    #  AZURE_SERVICE_PRINCIPAL_ID: ${{ secrets.OCP_AZURE_SERVICE_PRINCIPAL_ID }}
+    #  AZURE_SERVICE_PRINCIPAL_SECRET: ${{ secrets.OCP_AZURE_SERVICE_PRINCIPAL_SECRET }}
+    #  AZURE_TENANT_ID: ${{ secrets.OCP_AZURE_TENANT_ID }}
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Azure login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.CF_BAKERY_INTERNAL_NONPROD_SPN_CREDS }}
+          creds: ${{ secrets.OCP_INTERNAL_NONPROD_SPN_CREDS }}
           allow-no-subscriptions: true
           
       - name: Add AAD group to parent group
         run: |
-          group_id=$(az ad group show --group '${{ inputs.aad_group }}' --output tsv --query id)   
+          group_id=$(az ad group show --group '${{ inputs.aad_group }}' --output tsv --query id)
+          echo $group_id
           if [[ $group_id == "" ]]; then
             echo "Error getting the Object ID of the group: "  ${{ inputs.aad_group }}
             exit 1
