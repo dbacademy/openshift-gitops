@@ -37,7 +37,7 @@ jobs:
           hi
           You have notification for ${{github.event.pull_request.title}} 
           To approve or reject please check https://github.com/dbacademy/openshift-gitops/pull/${{ steps.extract_pr_number.outputs.PR_NUMBER }}
-
+        convert_markdown: true
 #  Telnet-check:
 #          To approve or reject please check https://github.com/dbacademy/openshift-gitops/pull/${{github.event.pull_request.number}}  
 #          name: Telnet test
