@@ -9,10 +9,21 @@ on:
 
 jobs:
   email_notification:
-    name: email test
+    name: Email Notification for New PR
     runs-on: openshift-selfhosted-runner    
+    
     steps:
-    - name: Send Email
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Extract pull request number
+      id: extract_pr_number
+      run: |
+        PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+        echo "The pull request number is $PR_NUMBER"
+        echo "::set-output name=PR_NUMBER::$PR_NUMBER"      
+
+    - name: Sending Email
       uses: dawidd6/action-send-mail@v3
       with:
         server_address:  10.120.98.70
@@ -20,14 +31,15 @@ jobs:
         subject: ${{github.event.pull_request.title}} by ${{github.actor}}
         to: dbiswas@volvocars.com
         #to: stabassu@volvocars.com
-        cc: jon.nordgren@volvocars.com
+        ##cc: jon.nordgren@volvocars.com
         from: ocponboarding@volvocars.com
         body: |
           hi
           You have notification for ${{github.event.pull_request.title}} 
-          To approve or reject please check https://github.com/dbacademy/openshift-gitops/pull/${{github.event.pull_request.number}}
+          To approve or reject please check https://github.com/dbacademy/openshift-gitops/pull/${{ steps.extract_pr_number.outputs.PR_NUMBER }}
 
 #  Telnet-check:
+#          To approve or reject please check https://github.com/dbacademy/openshift-gitops/pull/${{github.event.pull_request.number}}  
 #          name: Telnet test
 #          runs-on: openshift-selfhosted-runner
 #          steps:
