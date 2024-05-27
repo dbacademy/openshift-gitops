@@ -64,9 +64,9 @@ jobs:
           FOLDER_NAME="${{ steps.pr_details.outputs.pull_requests_directory_path }}"
           FOLDER_NAME_BASE=`basename $FOLDER_NAME`
           if [ "${{ steps.check_folder.outputs.folder_exists }}" == 'true' ]; then
-            COMMENT="Folder '$FOLDER_NAME_BASE' already exists, namespace is already available into the cluster.. continue ??."
+            COMMENT="Namespace '$FOLDER_NAME_BASE' already available into the cluster.. continue ??."
           else
-            COMMENT="Folder '$FOLDER_NAME_BASE' does not exist, new Namespace request."
+            COMMENT="Namespace '$FOLDER_NAME_BASE' does not exist, This is for new namespace request."
           fi
           echo "Adding comment to pull request $PR_NUMBER: $COMMENT"
           curl -X POST -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" -d "{\"body\": \"$COMMENT\"}" "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" > /dev/null 2>&1
