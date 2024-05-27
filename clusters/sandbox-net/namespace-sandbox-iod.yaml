@@ -1,0 +1,20 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: namespace-sandbox-iod
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./namespaces/nonprod/sandbox-iod"
+  kubeConfig:
+    secretRef:
+      name: iod-sandbox-net-kubeconfig
+  sourceRef:
+    kind: GitRepository
+    name: git-repo-openshift-gitops
+  prune: true
+  #postBuild:
+  #  substituteFrom:
+  #    - kind: ConfigMap
+  #      name: ocp-sandbox-net-cm
+  #      optional: true
