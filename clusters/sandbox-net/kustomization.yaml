@@ -3,3 +3,4 @@ resources:
   - ocp-sandbox-net-cm.yaml
   - onboard-sandbox-net.yaml
   - namespace-sandbox-net.yaml
+  - namespace-sandbox-iod.yaml
