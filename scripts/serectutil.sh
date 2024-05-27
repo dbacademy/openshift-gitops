@@ -114,7 +114,8 @@ get_repo_base_dir() {
       return
     fi 
   # if script is run in the root folder of this repo
-  elif [[ "$current_running_dir" =~ (icoe-mq-k8s-services)$ ]]; then
+  # elif [[ "$current_running_dir" =~ (icoe-mq-k8s-services)$ ]]; then
+  elif [[ "$current_running_dir" =~ (openshift-gitops)$ ]]; then
       REPO_BASE_DIR=$(pwd)
       return
   fi
@@ -275,14 +276,16 @@ EOF
   fi
 }
 
-#  init variables
+#  init variables 
+# updated by dbiswas
+# changed from mq-flux to ocp-flux and mq-argocd to ocp-argocd
 init_vars(){
 
   if [[ ${GITOPS_TYPE} = "flux" ]]; then
-    DEST_SERVICE_ACCOUNT=mq-flux
+    DEST_SERVICE_ACCOUNT=ocp-flux
   fi
   if [[ ${GITOPS_TYPE} = "argocd" ]]; then
-    DEST_SERVICE_ACCOUNT=mq-argocd
+    DEST_SERVICE_ACCOUNT=ocp-argocd
   fi
   
   # tmp folder to store context file
@@ -417,10 +420,12 @@ _ensure_ns() {
 
   kubectl config use $context
 
-  local icoe_mq_exists=$(kubectl get ns ${namespace} 2>&1)
+# icoe_mq_exists changed ro ocp_ns_exists
+#  local icoe_mq_exists=$(kubectl get ns ${namespace} 2>&1)
+  local ocp_ns_exists=$(kubectl get ns ${namespace} 2>&1)  
   log "INFO" "making sure namespace ${namespace} exist on ${context}"
 
-  if [[ "${icoe_mq_exists}" =~ NotFound ]];then
+  if [[ "${ocp_ns_exists}" =~ NotFound ]];then
     log "INFO" "namespace ${namespace} doesn't exist on ${context}, creating it... ";
     kubectl create ns ${namespace};
   else
