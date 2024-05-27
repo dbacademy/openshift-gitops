@@ -1,0 +1,21 @@
+name: Get the Azure AD group ID
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      dir_path:
+        description: "Imput Directory Path"
+        required: true
+        type: string
+jobs:
+   check_commands:
+     name: Linux command
+     runs-on: ubuntu-latest
+     steps:
+       - name: test comamnd
+         run: |
+           echo "Hello World"
+           basename ${{ inputs.dir_path }}
+
