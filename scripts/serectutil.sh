@@ -110,7 +110,7 @@ get_repo_base_dir() {
   if [[  "$current_running_dir" =~ (/scripts)$ ]]; then
     index=$( get_first_index_of $current_running_dir "/scripts" )
     if [ ! $index = -1 ];then
-      REPO_BASE_DIR=${current_running_dir:0:$index+1}
+      REPO_BASE_DIR=${current_running_dir:0:$index+2}
       return
     fi 
   # if script is run in the root folder of this repo
