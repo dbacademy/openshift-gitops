@@ -17,5 +17,6 @@ jobs:
        - name: test comamnd
          run: |
            echo "Hello World"
-           basename ${{ inputs.dir_path }}
+           dir_name=basename ${{ inputs.dir_path }}
+           echo $dir_name
 
