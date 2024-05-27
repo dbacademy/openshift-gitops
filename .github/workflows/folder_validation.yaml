@@ -62,8 +62,7 @@ jobs:
         run: |
           PR_NUMBER="${{ steps.extract_pr_number.outputs.PR_NUMBER }}"
           FOLDER_NAME="${{ steps.pr_details.outputs.pull_requests_directory_path }}"
-          basename $FOLDER_NAME
-          FOLDER_NAME_NEW=basename $FOLDER_NAME
+          FOLDER_NAME_NEW=`basename $FOLDER_NAME`
           if [ "${{ steps.check_folder.outputs.folder_exists }}" == 'true' ]; then
             COMMENT="Folder '$FOLDER_NAME_NEW' already exists, namespace is already available into the cluster.. continue ??."
           else
