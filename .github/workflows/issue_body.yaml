@@ -1,0 +1,16 @@
+name: Vakidate Github Issue comment 
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  issues:
+    types:
+        - opened
+        - reopened
+jobs:
+   check_comments:
+     name: Github new issue comments
+     runs-on: ubuntu-latest
+     steps:
+       - name: Issue comments
+         run: echo ${{ github.event.comment.body }}
