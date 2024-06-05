@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  labels:
-    kubernetes.io/metadata.name: ocptest
-    kubernetes.io/metadata.environment: nonprod
-    kubernetes.io/metadata.appid: app-4672
-    kustomize.toolkit.fluxcd.io/prune: disabled
-  name: app-4672-ocptest-103
