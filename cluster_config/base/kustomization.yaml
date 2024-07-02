@@ -1,5 +1,5 @@
 
 
 resources:
-  - mfg-access-chart.yaml
+  #  - mfg-access-chart.yaml
   - release_gitrepo.yaml
