@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ../base
-  - release.yaml
 configMapGenerator:
   - name: mfg-access-sandbox-values
     files:

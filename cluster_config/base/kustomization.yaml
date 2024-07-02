@@ -2,3 +2,4 @@
 
 resources:
   - mfg-access-chart.yaml
+  - release_gitrepo.yaml
