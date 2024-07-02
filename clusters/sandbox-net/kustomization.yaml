@@ -4,3 +4,4 @@ resources:
   - onboard-sandbox-net.yaml
   - namespace-sandbox-net.yaml
   - namespace-sandbox-iod.yaml
+  - ../../cluster_config/sandbox-net/
