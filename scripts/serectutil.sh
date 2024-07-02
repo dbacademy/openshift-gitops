@@ -106,17 +106,22 @@ get_repo_base_dir() {
   # credit: https://stackoverflow.com/questions/59895/how-do-i-get-the-directory-where-a-bash-script-is-located-from-within-the-script
   # ref: https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html#index-BASH_005fSOURCE
   local current_running_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-
+  echo $current_running_dir
   if [[  "$current_running_dir" =~ (/scripts)$ ]]; then
     index=$( get_first_index_of $current_running_dir "/scripts" )
     if [ ! $index = -1 ];then
+  #    echo $current_running_dir
+  #    echo $index
+  #    REPO_BASE_DIR=${current_running_dir:0:$index+1}
       REPO_BASE_DIR=${current_running_dir:0:$index+2}
+  #    echo " first check: $REPO_BASE_DIR"
       return
     fi 
   # if script is run in the root folder of this repo
   # elif [[ "$current_running_dir" =~ (icoe-mq-k8s-services)$ ]]; then
   elif [[ "$current_running_dir" =~ (openshift-gitops)$ ]]; then
       REPO_BASE_DIR=$(pwd)
+  #    echo " second check: $REPO_BASE_DIR"
       return
   fi
   # this should not happen, but if it happens, we will safely exit
@@ -131,6 +136,7 @@ generate_contexts_file(){
 
   get_contexts_error=$(python3 ${REPO_BASE_DIR}/scripts/get_contexts.py -o "${output}" 2>&1)
   if [ ! -z "${get_contexts_error}" ];then
+    log "ERROR" "base directory path: ${REPO_BASE_DIR}"	  
     log "ERROR" "failed getting contexts: ${get_contexts_error}" 1>&2
     exit 1
   fi
