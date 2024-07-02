@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmChart
+metadata:
+  name: podinfo-git
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: git-repo-openshift-gitops
+  chart: .charts/ocp-onboard/
