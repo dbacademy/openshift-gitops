@@ -7,3 +7,14 @@ configMapGenerator:
   - name: mfg-access-sandbox-values
     files:
       - values.yaml=values-sandbox-net.yaml
+
+patches:
+  - target:
+      kind: HelmRelease
+      name: mfg-access-sandbox-release
+  - patch: |-
+      - op: add
+        path: /spec/valuesFrom
+        values:
+          - chartFileRef:
+              path: values-sandbox-net.yaml

@@ -13,6 +13,8 @@ spec:
         name: git-repo-openshift-gitops
         namespace: flux-system 
       interval: 1m
-  valuesFrom:
-    - kind: ConfigMap
-      name: mfg-access-sandbox-values
+  #valuesFrom:
+  #- chartFileRef:
+  #    path: to-be-replaced.yaml   
+  #   - kind: ConfigMap
+  #      name: mfg-access-sandbox-values
