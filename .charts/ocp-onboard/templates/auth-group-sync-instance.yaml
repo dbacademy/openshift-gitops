@@ -1,0 +1,24 @@
+{{- if .Values.groupsync.enabled }}
+{{- if hasKey .Values "groups" }}
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  name: {{ .Values.groupsync.instance}}-mfg
+  namespace: group-sync-operator
+spec:
+  providers:
+    - azure:
+        credentialsSecret:
+          key: AZURE_CLIENT_SECRET
+          kind: Secret
+          name: azure-group-sync
+          namespace: group-sync-operator
+        groups:
+          {{- range .Values.groups }}
+          {{- $grpName := .group }}
+          - {{ $grpName }}
+          {{- end }}
+      name: azure
+  schedule: '* * * * *'
+{{- end }}
+{{- end }}

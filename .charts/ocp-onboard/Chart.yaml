@@ -1,0 +1,7 @@
+apiVersion: v2
+name: ocp-rbac
+description: Openshift cluster RBAC chart for Factory clusters 
+version: 1.0.0
+maintainers:
+  - name: Debabrata Biswas
+    email: debabrata.biswas@volvocars.com

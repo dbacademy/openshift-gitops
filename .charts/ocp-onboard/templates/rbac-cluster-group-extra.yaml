@@ -1,0 +1,26 @@
+{{- if hasKey .Values "groups" }}
+{{- range .Values.groups }}
+{{- $team := .group }}
+{{- range .rbac }}
+{{- $role := .clusterRole }}
+{{- if ne $role "cluster-admin" }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mfg-{{ $team }}-{{ .namespace }}-{{ .clusterRole }}-rb
+  namespace: {{ .namespace }}
+  labels:
+{{ include "mychart.labels" $ | indent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .clusterRole }}
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: {{ $team | quote }}
+{{- end }}  
+{{- end }}
+{{- end }}
+{{- end }}

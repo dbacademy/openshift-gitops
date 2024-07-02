@@ -1,0 +1,7 @@
+Groups:
+{{- range .Values.groups -}}
+{{ .group | quote | nindent 2 }}
+{{- end }}
+{{ include "mychart.name" . | nindent 2 }}
+{{ include "mychart.labels" . | nindent 2 }}
+

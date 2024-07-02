@@ -1,0 +1,26 @@
+# Default values for mychart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+groups:
+  - group: cld-aws-icpa-sg
+    rbac:
+      - clusterRole: view
+        namespace: namespace-1
+  - group: cld-az-ocpvnl-prod-sg
+    rbac:
+      - clusterRole: edit
+        namespace: namespace-2
+      - clusterRole: admin
+        namespace: namespace-3
+  - group: cld-app-2680-prod-001-sg 
+
+# Group Sync operator instance details. Should not be changed once added 
+# Recomended not to change this section
+# This will enable adding groups specified into above section into Group sync insances for Azure ad sync       
+groupsync:
+       enabled: true
+       instance: azure-groupsync
+       namespace: group-sync-operator 
+
+       
