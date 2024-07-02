@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mfg-access-sandbox-release
+spec:
+  chartRef:
+    kind: HelmChart
+    name: mfg-ocp-access-chart
+    namespace: flux-system
+  interval: 10m
+  valuesFrom:
+    - kind: ConfigMap
+      name: mfg-access-sandbox-values
