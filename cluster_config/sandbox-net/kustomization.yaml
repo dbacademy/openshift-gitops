@@ -10,6 +10,9 @@ configMapGenerator:
   - name: mfg-access-sandbox-values
     files:
       - values.yaml=values-sandbox-net.yaml
+
+nameSuffix: -sandbox-release 
+
 #patches:
 #  - patch: |-
 #      - op: add 
@@ -20,16 +23,21 @@ configMapGenerator:
 #    target:
 #      kind: HelmRelease
    
+#patches:
+#  - path: values-sandbox-net.yaml
+#    target:
+#      kind: HelmRelease
 
-patches:
-  - patch: |-
-      - op: add 
-        path: /spec/valuesFrom
-        value:
-          - chartFileRef:
-              path: values-sandbox-net.yaml 
-    target:
-      kind: HelmRelease
+        
+#patches:
+#  - patch: |-
+#      - op: add 
+#        path: /spec/valuesFrom
+#        value:
+#          - chartFileRef:
+#              path: values-sandbox-net.yaml 
+#    target:
+#      kind: HelmRelease
 
 #patches:
 #  - target:
