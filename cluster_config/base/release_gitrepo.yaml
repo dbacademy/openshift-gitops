@@ -16,7 +16,7 @@ spec:
   valuesFrom:
      - kind: ConfigMap
        name: mfg-sandbox-values
-       valueKey: values.yaml
+#       valueKey: values.yaml
   #values:
   #- chartFileRef:
   #    path: to-be-replaced.yaml   
