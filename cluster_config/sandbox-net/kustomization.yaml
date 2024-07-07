@@ -32,9 +32,9 @@ configMapGenerator:
 patches:
   - patch: |-
       - op: replace
-        path: /spec/chart/spec/valueFiles
+        path: /spec/chart/spec/valueFiles/0
         value:
-          - values-sandbox-net.yaml
+          values-sandbox-net.yaml
 #          valueFiles:
 #          - values-sandbox-net.yaml
 #          valueFiles:
