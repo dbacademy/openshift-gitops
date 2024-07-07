@@ -34,7 +34,7 @@ patches:
       - op: replace
         path: /spec/chart/spec/valuesFiles
         value:
-          - values-sandbox-net.yaml
+          - ./values-sandbox-net.yaml
 #          valueFiles:
 #          - values-sandbox-net.yaml
 #          valueFiles:
