@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: mfg-release
+  name: mfg-sandbox-release
   namespace: flux-system
 spec:
   interval: 1m
@@ -11,15 +11,11 @@ spec:
       sourceRef:
         kind: GitRepository
         name: git-repo-openshift-gitops
-        namespace: flux-system
-      reconcileStrategy: Revision
-      version: '*'
+        namespace: flux-system 
       interval: 1m
-      valueFiles:
-      - /path/to/values.yaml    
-#  valuesFrom:
-#     - kind: ConfigMap
-#       name: mfg-sandbox-values
+  valuesFrom:
+     - kind: ConfigMap
+       name: mfg-sandbox-values
 #       valueKey: values.yaml
   #values:
   #- chartFileRef:

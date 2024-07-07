@@ -29,15 +29,20 @@ configMapGenerator:
 #      kind: HelmRelease
 
         
-#patches:
-#  - patch: |-
-#      - op: add 
-#        path: /spec/valuesFrom
-#        value:
-#          - chartFileRef:
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/chart/spec/valueFiles
+        value:
+          - values-sandbox-net.yaml
+#          valueFiles:
+#          - values-sandbox-net.yaml
+#          valueFiles:
 #              path: values-sandbox-net.yaml 
-#    target:
-#      kind: HelmRelease
+    target:
+      kind: HelmRelease
+
+nameSuffix: -sandbox
 
 #patches:
 #  - target:
