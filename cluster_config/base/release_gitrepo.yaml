@@ -15,7 +15,7 @@ spec:
       reconcileStrategy: Revision
       version: '*'
       interval: 1m
-      valueFiles:
+      valuesFiles:
       - /path/to/values.yaml    
 #  valuesFrom:
 #     - kind: ConfigMap
