@@ -1,0 +1,64 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: flux-system
+
+resources:
+#bases:
+  - ../base/
+
+#configMapGenerator:
+#  - name: mfg-access-sandbox-values
+#    files:
+#      - values.yaml=values-sandbox-net.yaml
+
+#nameSuffix: -sandbox-release 
+
+#patches:
+#  - patch: |-
+#      - op: add 
+#        path: /spec/kubeConfig
+#        value:
+#          secretRef:
+#            name: ocp-vcfl-nonprod-kubeconfig
+#    target:
+#      kind: HelmRelease
+   
+#patches:
+#  - path: values-sandbox-net.yaml
+#    target:
+#      kind: HelmRelease
+
+        
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/chart/spec/valuesFiles
+        value:
+          - ./cluster_config/iod-sandbox/values-sandbox-iod.yaml
+#          valueFiles:
+#          - values-sandbox-net.yaml
+#          valueFiles:
+#              path: values-sandbox-net.yaml 
+    target:
+      kind: HelmRelease
+  
+  - patch: |-
+      - op: add
+        path: /spec/kubeConfig
+        value:
+          secretRef:
+            name: iod-sandbox-net-kubeconfig
+         
+    target:
+      kind: HelmRelease
+
+nameSuffix: -sandbox-iod
+
+#patches:
+#  - target:
+#      kind: HelmRelease
+#      name: mfg-access-sandbox-release
+#    patch: |-
+#      - op: replace
+#        path: /spec/interval
+#        value: 5m
