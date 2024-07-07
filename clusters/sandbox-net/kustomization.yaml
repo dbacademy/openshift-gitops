@@ -5,3 +5,4 @@ resources:
   - namespace-sandbox-net.yaml
   - namespace-sandbox-iod.yaml
   - ../../cluster_config/sandbox-net/
+  - ../../cluster_config/iod-sandbox/
