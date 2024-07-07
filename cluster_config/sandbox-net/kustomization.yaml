@@ -42,7 +42,7 @@ patches:
     target:
       kind: HelmRelease
 
-nameSuffix: -sandbox
+#nameSuffix: -sandbox
 
 #patches:
 #  - target:
