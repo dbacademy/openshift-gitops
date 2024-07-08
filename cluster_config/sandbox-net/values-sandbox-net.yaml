@@ -1,6 +1,23 @@
 # Default values for mychart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+#
+# EXAMPLE ENTRY
+# Group name must be Azure AD security group and already exists.
+# Namespace and role should e valid and exists
+# Group entry without rbac will only add group into Groupsync instance
+# Group entry with rbac will create check and add group into Groupsync and create each rolebinding for each namespace
+
+
+#groups:
+#  - group: cld-openshift-cluster-prod-sg
+#  - group: cld-az-ocpvnl-prod-sg
+#    rbac:
+#      - clusterRole: edit
+#        namespace: namespace-2
+#      - clusterRole: admin
+#        namespace: namespace-3
+
 
 groups:
   - group: cld-aws-icpa-sg
