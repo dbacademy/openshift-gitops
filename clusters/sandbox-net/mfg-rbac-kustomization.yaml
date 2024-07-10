@@ -8,7 +8,7 @@ spec:
   path: "./config/mfg_rbac"
   sourceRef:
     kind: GitRepository
-    name: git-repo-openshift-onboard
+    name: git-repo-openshift-charts
   prune: true
   #postBuild:
   #  substituteFrom:
