@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  password: Z2hwX2VsQTB3RHdVdmNTdHNuM211Sm9ycld0NTZWOHJSMTI2anVqbg==
+  username: ZGJhY2FkZW15
+kind: Secret
+metadata:
+  name: git-vcc-auth
+  namespace: flux-system
+type: Opaque
