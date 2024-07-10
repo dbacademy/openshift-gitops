@@ -3,3 +3,4 @@ resources:
   - git-pat-openshift-gitops.yaml
   - git-repo-ocpenshift-gitops.yaml
   - git-demo-repo.yaml
+  - ../../sources/gitRepositories/ 

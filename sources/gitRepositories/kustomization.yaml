@@ -1,3 +1,5 @@
 
 resources:
-  - podinfo-source.yaml        
+  - git-repo-openshift-charts.yaml
+  - git-repo-openshift-onboard.yaml
+  #- podinfo-source.yaml        
