@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: "./config"
+  path: "./config/mfg_rbac"
   sourceRef:
     kind: GitRepository
     name: git-repo-openshift-onboard
