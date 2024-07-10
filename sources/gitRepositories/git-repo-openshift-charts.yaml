@@ -7,6 +7,6 @@ spec:
   interval: 5m0s
   url: "https://github.com/volvo-cars/openshift-charts.git"
   ref:
-    branch: master
+    branch: main
   secretRef:
     name: git-vcc-auth
