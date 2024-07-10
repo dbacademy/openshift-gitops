@@ -4,5 +4,6 @@ resources:
   - onboard-sandbox-net.yaml
   - namespace-sandbox-net.yaml
   - namespace-sandbox-iod.yaml
+  - mfg-rbac-kustomization.yaml
 #  - ../../cluster_config/sandbox-net/
 #  - ../../cluster_config/iod-sandbox/
