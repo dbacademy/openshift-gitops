@@ -1,4 +1,4 @@
-name: Check PR Merged Status
+name: Check PR Merged Status & Delete Branch
 
 on:
   pull_request:
@@ -10,6 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: Generate token
+      id: generate_token
+      uses: getsentry/action-github-app-token@v2
+      with:
+        app_id: ${{ secrets.GH_INTEGRATION_APP_ID }}
+        private_key: ${{ secrets.GH_INTEGRATION_APP_KEY }}
+
     - name: Check if pull request was merged
       id: check_pr_merged
       uses: actions/github-script@v6
@@ -39,4 +47,5 @@ jobs:
           else
             echo "Branch $BRANCH is $MERGE_STATUS....Deleting branch $BRANCH."
           fi
-          curl -X DELETE -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/git/refs/heads/$BRANCH
+          #curl -X DELETE -H "Authorization: token ${{ secrets.AUTOMATION_REPO_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/git/refs/heads/$BRANCH
+          curl -X DELETE -H "Authorization: token ${{ steps.generate_token.outputs.token }}" https://api.github.com/repos/${{ github.repository }}/git/refs/heads/$BRANCH
