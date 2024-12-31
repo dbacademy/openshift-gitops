@@ -1,0 +1,262 @@
+name: Create or update namespace
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      cluster_provider:
+        description: "Platform provider Azure/OnPrem"
+        required: true
+        type: string
+      cluster_environment:
+        description: "Deployment environment where namespace will be created"
+        required: true
+        type: string
+      namespace_name:
+        description: "Name of the namespace getting created or updated"
+        required: true
+        type: string
+      aad_group:
+        description: "AAD security group for namespace access"
+        required: true
+        type: string
+      app_id:
+        description: "APPID of the application which will be deployed in the namespace"
+        required: true
+        type: string        
+      istio_onboarding:
+        description: "Enable Service Istion injection for the namespace"
+        required: false
+        default: false
+        type: boolean
+        
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  namespace_ops:
+    name: Create or update the namespace
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: getsentry/action-github-app-token@v2
+        with:
+          app_id: ${{ secrets.GH_INTEGRATION_APP_ID }}
+          private_key: ${{ secrets.GH_INTEGRATION_APP_KEY }}
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}        
+
+      - name: Checkout branch
+        id: checkout-branch
+        run: |
+          pwd
+          git fetch --unshallow
+          echo "git checkout main"
+          git checkout -b update-kustomization-${{ inputs.namespace_name }}-${{ inputs.app_id }}-${{ inputs.cluster_environment }} 
+
+      # Install python packages
+      - name: Install packages
+        run: |
+          pip3 install ruamel.yaml
+          pip3 install ruamel.yaml.string          
+
+      # Runs a python script to create or update namespace
+      - name: Create or update namespace
+        shell: python
+        run: |
+          #python3 "tools/create_update_namespace.py" '${{ inputs.cluster_provider }}' '${{ inputs.cluster_group }}' '${{ inputs.deploy_environment }}'  '${{ inputs.namespace_name }}' '${{ inputs.aad_group }}' '${{ inputs.app_id }}' '${{ inputs.apps }}'
+          import os
+          import sys
+          import json
+          from ruamel.yaml import YAML
+          from ruamel.yaml.scalarstring import PreservedScalarString
+          
+          # Get the command-line arguments defined
+          cluster_provider='${{ inputs.cluster_provider }}'
+          cluster_environment= '${{ inputs.cluster_environment }}'
+          namespace_name= '${{ inputs.namespace_name }}'
+          aad_group= '${{ inputs.aad_group }}'
+          app_id= '${{ inputs.app_id }}'
+
+          # Check cluster provider
+          if cluster_provider != "azure" and cluster_provider != "onprem":
+            print(f"Cluster provider argument is not valid: {cluster_provider}")
+            sys.exit(1)
+
+          # Set CWD as cluster_environment path 
+          cwd = os.getcwd() + "/namespaces/" + cluster_provider + "/" + cluster_environment 
+
+          # Print the current working directory
+          print("Current working directory: {0}".format(cwd))
+
+          # Check if the namespace already exists
+          namespace_path = cwd + "/" + namespace_name
+          fname = "kustomization.yaml"
+          kustomization_path = namespace_path + "/" + fname
+
+          namespace_exists= os.path.isdir(namespace_path)
+
+          if namespace_exists:
+              print(f"The namespace {namespace_name} exists, updating the file {kustomization_path} .") 
+              print(f"The namespace {namespace_name} exists, Please raise pull request for any update .") 
+              sys.exit(1)
+          else:
+              print(f"The namespace {namespace_name} does not exists, will be created.")
+              kustomization_path = f"templates/namespace/{cluster_provider}/{cluster_environment}/{fname}"
+              print(f"The new kustomization is  {kustomization_path}.")
+
+
+          # open the kustomization.yaml file for reading and writing
+          print(f"Loading the kustomization data from {kustomization_path}.")
+
+          yaml = YAML(typ=['rt', 'string'])
+          yaml.default_flow_style = False
+
+          with open(kustomization_path, "r+") as f:
+              # load the kustomization data
+              kustomization_data = yaml.load(f)
+
+          # Updating base kustomization file.
+          print("Updating the Namespace details.")
+          # update the Namespace details
+          kustomization_data["nameSuffix"] = namespace_name         
+
+          # Section to uodate kustomization patches 
+
+          if kustomization_data.keys().__contains__("patchesJson6902"):
+              docPatches = yaml.load(kustomization_data["patchesJson6902"][0]["patch"])
+              kustomization_data["patchesJson6902"][0]["target"]["name"] = f"base-application-{namespace_name}"
+          else:
+              docPatches = yaml.load(kustomization_data["patches"][0]["patch"])
+              kustomization_data["patches"][0]["target"]["name"] = f"base-application-{namespace_name}"
+
+          for patch in docPatches:
+              if patch["path"] == '/spec/source/helm/values':
+                  print("Updating the patch for apps and RBAC permissions.")
+                  valuePatch = yaml.load(patch["value"])
+              
+                  # Update the AAD group and namespace name
+                  OIDCGroupMapping = valuePatch["rbac"]["OIDCGroupMapping"]
+                  OIDCGroupMapping[aad_group] = "namespace-edit"
+                  if '{aad_group}' in OIDCGroupMapping:
+                      del OIDCGroupMapping['{aad_group}']
+                  
+                  # update AppID
+                  print("Updating the patch for FinOps details.")
+                  valuePatch["extraLabels"]["AppID"] = app_id
+
+                  # update namespace name 
+                  valuePatch["namespace"]["name"]=namespace_name                  
+
+                  valuePatchstr=yaml.dump_to_string(valuePatch)
+                  patch["value"]= PreservedScalarString(valuePatchstr)
+
+          docPatchesstr=yaml.dump_to_string(docPatches)
+          if kustomization_data.keys().__contains__("patchesJson6902"):
+            kustomization_data["patchesJson6902"][0]["patch"] = docPatchesstr
+            kustomization_data["patchesJson6902"][0]["patch"] = PreservedScalarString(docPatchesstr)
+          else:
+            kustomization_data["patches"][0]["patch"] = docPatchesstr
+            kustomization_data["patches"][0]["patch"] = PreservedScalarString(docPatchesstr)                  
+
+
+          # Dump the modified object to the YAML file
+          print("New namespace path: {0}".format(namespace_path))
+          if not os.path.isdir(namespace_path):
+              print("Creating namespace path: {0}".format(namespace_path))
+              os.mkdir(namespace_path)
+
+          print(f"Updating the {fname}.")
+
+          with open(namespace_path + "/" + fname, "w") as f:
+              yaml.dump(kustomization_data, f)
+
+          print("Namespace details saved successfully.")            
+
+
+      - name: update kustomization.yaml with new namespace
+        id: validate-kustomization-file
+        shell: python
+        run: |
+          import os
+          from ruamel.yaml import YAML
+          
+          cwd = os.getcwd() + "/namespaces/" + "${{ inputs.cluster_provider }}" + "/" + "${{ inputs.cluster_environment }}" 
+          # Print the current working directory
+          print("Current working directory: {0}".format(cwd))
+          namespace_name= '${{ inputs.namespace_name }}'
+          namespace_path = f"{cwd}/${{ inputs.namespace_name }}"
+          print("Namespace directory path: {0}".format(namespace_path))
+          fname = "kustomization.yaml"
+          kustomization_path = namespace_path + "/" + fname
+          # Change directory to namespace_path
+          print(f"Changing directory to: {namespace_path}")
+          os.chdir( namespace_path )
+            
+          yaml =  YAML(typ=['rt', 'string'])
+          yaml.default_flow_style = False
+            
+          # open the kustomization.yaml file for reading and writing
+          fname = "kustomization.yaml"
+          print("Load the kustomization data")
+          with open("kustomization.yaml", "r+") as f:          
+              kustomization_data = yaml.load(f)
+              if not namespace_name in kustomization_data["resources"]:
+                print("Append namespace details in the Kustomization")
+                # modify the data here, for example adding a new resource
+                #kustomization_data["resources"].append(namespace_name)
+                  
+                # move the file pointer to the beginning of the file
+                f.seek(0)
+                 
+                print("Initialize the YAML object with correct indentation")
+                yaml.indent(sequence=4, offset=2)
+                  
+                # use ruamel.yaml to write the modified data back to the file while preserving indentation
+                print("Saving the Kustomization.yaml file")
+                yaml.dump(kustomization_data, f)
+                # truncate the file to the current position to remove any remaining content
+                f.truncate()
+                print("Kustomization.yaml file saved")
+              else:
+                print(f"{namespace_name} already in Kustomization.yaml")      
+
+      - name: Commit changes made to Kustomization.yaml file
+        id: commit-changes
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.email "dbacademy@gmail.com"
+            git config user.name "dbacademy"
+            echo "git branch -l"
+            git branch -l
+            echo "git add";
+            git add -A
+            echo "git commit";
+            git commit -m "Created/Updated kustomization.yaml" -m "Created/Updated kustomization.yaml for ${{ inputs.namespace_name }}"
+            echo "git push -u origin update-kustomization-${{ inputs.namespace_name }}-${{ inputs.app_id }}-${{ inputs.cluster_environment }}";
+            git push -u origin update-kustomization-${{ inputs.namespace_name }}-${{ inputs.app_id }}-${{ inputs.cluster_environment }}
+          else
+            echo "No changes to commit.";
+          fi
+
+        # Create the Pull request wuth the branch created.
+      - name: Create a PR
+        id: create-pr
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: |
+          git branch --show-current 
+          pr_output=$(gh pr create --title "Create/Update ${{ inputs.namespace_name }}" --body "Changes for adding/updating ${{ inputs.namespace_name }} namespace")
+          # Extract the pull request number from the output and print it
+          pr_number=$(echo "$pr_output" | grep -oP '(?<=/pull/)\d+')      
+          echo "Pull request created with number: $pr_number"
+          echo "pr_number=${pr_number}" >> $GITHUB_OUTPUT

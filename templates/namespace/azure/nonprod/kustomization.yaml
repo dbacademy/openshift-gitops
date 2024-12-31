@@ -1,0 +1,46 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+nameSuffix: {namespace_name}
+patches:
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Application
+      name: base-application-
+    patch: |-
+      - op: replace
+        path: /spec/source/repoURL
+        value: https://harbor.infrastructure.volvo.care/chartrepo/bakery-charts
+      - op: replace
+        path: /spec/project
+        value: base-application-project
+      - op: replace
+        path: /spec/source/chart
+        value: onboard-team
+      - op: replace
+        path: /spec/source/targetRevision
+        value: 1.6.6
+      - op: replace
+        path: /spec/source/helm/values
+        value: |
+          namespace:
+            name: {namespace_name}
+          quota:
+            enabled: true
+            hard:
+              requests.cpu: "20"
+              requests.memory: 80Gi
+              limits.cpu: "40"
+              limits.memory: 160Gi
+          rbac:
+            OIDCGroupMapping:
+              "{aad_group}": "namespace-edit"
+          extraLabels:
+            "AppID": "{app_id}" 
+            "istio.io/rev": "default"
+            "component": "application"
+          extraAnnotations:
+            "bakery.volvocars.biz/vault-kv": '"true"'
+            "eck.volvocars.com/platform-observability": '"false"'
