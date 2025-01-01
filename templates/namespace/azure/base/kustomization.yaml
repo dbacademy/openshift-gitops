@@ -41,7 +41,7 @@ patches:
             projectconfig:
               enabled: true
               groups:
-              - "{aad_group}"
+               "{aad_group_id}": "argoapp-admin"
           extraLabels:
             "AppID": "{app_id}" 
             "istio.io/rev": "default"
