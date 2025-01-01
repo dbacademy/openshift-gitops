@@ -40,6 +40,8 @@ patches:
           argocdproperties:
             projectconfig:
               enabled: true
+              groups:
+              - "{aad_group_id}"
           extraLabels:
             "AppID": "{app_id}" 
             "istio.io/rev": "default"
