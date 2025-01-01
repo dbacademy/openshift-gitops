@@ -53,6 +53,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}        
 
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.OCP_INTERNAL_NONPROD_SPN_CREDS }}
+      
+      - name: 'Run Azure CLI commands'
+        run: |
+            az account show -o table
+            #az group list -o table
+            aad_group_id=$(az ad group show --group "${{ inputs.aad_group }}" --query id --out tsv)
+            #echo "Group ID is $GR_ID"
+            echo "gr id is $aad_group_id"
+            echo "aad_group_id=$aad_group_id" >> $GITHUB_ENV
+
       - name: Checkout branch
         id: checkout-branch
         run: |
@@ -84,6 +98,7 @@ jobs:
           namespace_name= '${{ inputs.namespace_name }}'
           aad_group= '${{ inputs.aad_group }}'
           app_id= '${{ inputs.app_id }}'
+          aad_group_id= '${{ env.aad_group_id }}'
 
           # Check cluster provider
           if cluster_provider != "azure" and cluster_provider != "onprem":
@@ -151,9 +166,9 @@ jobs:
 
                   # Update the AAD group ID for Argo Projet access & permission
                   projectconfig = valuePatch["argocdproperties"]["projectconfig"]["groups"]
-                  projectconfig[aad_group] = "argoapp-admin"
-                  if '{aad_group}' in projectconfig:
-                      del projectconfig['{aad_group}']                      
+                  projectconfig[aad_group_id] = "argoapp-admin"
+                  if '{aad_group_id}' in projectconfig:
+                      del projectconfig['{aad_group_id}']                      
                       
                   # update AppID
                   print("Updating the patch for FinOps details.")
