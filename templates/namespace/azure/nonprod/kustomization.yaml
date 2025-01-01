@@ -41,6 +41,4 @@ patches:
             "AppID": "{app_id}" 
             "istio.io/rev": "default"
             "component": "application"
-          extraAnnotations:
-            "bakery.volvocars.biz/vault-kv": '"true"'
-            "eck.volvocars.com/platform-observability": '"false"'
+
