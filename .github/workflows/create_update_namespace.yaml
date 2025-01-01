@@ -109,7 +109,8 @@ jobs:
               sys.exit(1)
           else:
               print(f"The namespace {namespace_name} does not exists, will be created.")
-              kustomization_path = f"templates/namespace/{cluster_provider}/{cluster_environment}/{fname}"
+              #kustomization_path = f"templates/namespace/{cluster_provider}/{cluster_environment}/{fname}"
+              kustomization_path = f"templates/namespace/{cluster_provider}/base/{fname}"
               print(f"The new kustomization is  {kustomization_path}.")
 
 
