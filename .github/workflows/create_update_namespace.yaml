@@ -148,7 +148,13 @@ jobs:
                   OIDCGroupMapping[aad_group] = "namespace-admin"
                   if '{aad_group}' in OIDCGroupMapping:
                       del OIDCGroupMapping['{aad_group}']
-                  
+
+                  # Update the AAD group ID for Argo Projet access & permission
+                  projectconfig = valuePatch["argocdproperties"]["projectconfig"]["groups"]
+                  projectconfig[aad_group] = "namespace-admin"
+                  if '{aad_group}' in projectconfig:
+                      del projectconfig['{aad_group}']                      
+                      
                   # update AppID
                   print("Updating the patch for FinOps details.")
                   valuePatch["extraLabels"]["AppID"] = app_id
