@@ -36,7 +36,7 @@ patches:
               limits.memory: 160Gi
           rbac:
             OIDCGroupMapping:
-              "{aad_group}": "namespace-edit"
+              "{aad_group}": "namespace-admin"
           extraLabels:
             "AppID": "{app_id}" 
             "istio.io/rev": "default"
