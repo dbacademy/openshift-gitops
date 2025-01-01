@@ -37,6 +37,9 @@ patches:
           rbac:
             OIDCGroupMapping:
               "{aad_group}": "namespace-admin"
+          argocdproperties:
+            projectconfig:
+              enabled: true
           extraLabels:
             "AppID": "{app_id}" 
             "istio.io/rev": "default"
