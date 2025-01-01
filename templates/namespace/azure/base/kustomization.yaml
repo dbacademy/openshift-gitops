@@ -41,7 +41,7 @@ patches:
             projectconfig:
               enabled: true
               groups:
-              - "{aad_group_id}"
+              - "{aad_group}"
           extraLabels:
             "AppID": "{app_id}" 
             "istio.io/rev": "default"
