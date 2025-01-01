@@ -151,7 +151,7 @@ jobs:
 
                   # Update the AAD group ID for Argo Projet access & permission
                   projectconfig = valuePatch["argocdproperties"]["projectconfig"]["groups"]
-                  projectconfig[aad_group] = "namespace-admin"
+                  projectconfig[aad_group] = "argoapp-admin"
                   if '{aad_group}' in projectconfig:
                       del projectconfig['{aad_group}']                      
                       
