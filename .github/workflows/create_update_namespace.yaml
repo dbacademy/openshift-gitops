@@ -145,7 +145,7 @@ jobs:
               
                   # Update the AAD group and namespace name
                   OIDCGroupMapping = valuePatch["rbac"]["OIDCGroupMapping"]
-                  OIDCGroupMapping[aad_group] = "namespace-edit"
+                  OIDCGroupMapping[aad_group] = "namespace-admin"
                   if '{aad_group}' in OIDCGroupMapping:
                       del OIDCGroupMapping['{aad_group}']
                   
