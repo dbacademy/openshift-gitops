@@ -106,7 +106,7 @@ jobs:
           app_id= '${{ inputs.app_id }}'
           aad_group_id= '${{ env.aad_group_id }}'
           istio_onboarding_enabled= '${{ inputs.istio_onboarding }}'
-          user_workload_monitor_enabled: '${{ inputs.user_workload_monitor }}'
+          user_workload_monitor_enabled= '${{ inputs.user_workload_monitor }}'
 
           # Check cluster provider
           if cluster_provider != "azure" and cluster_provider != "onprem":
