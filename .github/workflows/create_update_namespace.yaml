@@ -30,6 +30,12 @@ on:
         required: false
         default: false
         type: boolean
+      user_workload_monitor:
+          description: Enable user workload monitoring for the namespace ?  
+          required: false
+          default: false
+          type: boolean
+                
         
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -100,6 +106,7 @@ jobs:
           app_id= '${{ inputs.app_id }}'
           aad_group_id= '${{ env.aad_group_id }}'
           istio_onboarding_enabled= '${{ inputs.istio_onboarding }}'
+          user_workload_monitor_enabled: '${{ inputs.user_workload_monitor }}'
 
           # Check cluster provider
           if cluster_provider != "azure" and cluster_provider != "onprem":
@@ -161,7 +168,10 @@ jobs:
               
                   # Update the AAD group and namespace name
                   OIDCGroupMapping = valuePatch["rbac"]["OIDCGroupMapping"]
-                  OIDCGroupMapping[aad_group] = "namespace-admin"
+                  if user_workload_monitor_enabled:
+                     OIDCGroupMapping[aad_group] = "namespace-customadmin"
+                  else:
+                     OIDCGroupMapping[aad_group] = "namespace-admin"
                   if '{aad_group}' in OIDCGroupMapping:
                       del OIDCGroupMapping['{aad_group}']
 
