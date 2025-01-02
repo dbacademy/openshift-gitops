@@ -21,7 +21,7 @@ patches:
         value: onboard-team
       - op: replace
         path: /spec/source/targetRevision
-        value: 1.6.6
+        value: 1.0.2
       - op: replace
         path: /spec/source/helm/values
         value: |
@@ -34,6 +34,9 @@ patches:
               requests.memory: 80Gi
               limits.cpu: "40"
               limits.memory: 160Gi
+          psa:
+            level: restricted
+            mode: enforce    
           rbac:
             OIDCGroupMapping:
               "{aad_group}": "namespace-admin"
