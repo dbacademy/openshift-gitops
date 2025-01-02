@@ -176,7 +176,7 @@ jobs:
                   valuePatch["extraLabels"]["AppID"] = app_id
 
                   #Update Istio Injection 
-                  print(f"Updating the patch for Istio Injection for selected as {istio_onboarding}")
+                  print(f"Updating the patch for Istio Injection for selected as {istio_onboarding_enabled}")
                   if istio_onboarding_enabled:
                       valuePatch["extraLabels"]["istio-injection"] = "enabled"
 
