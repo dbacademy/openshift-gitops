@@ -45,5 +45,6 @@ patches:
           extraLabels:
             "AppID": "{app_id}" 
             "istio.io/rev": "default"
+            "istio-injection": "disabled"
             "component": "application"
 

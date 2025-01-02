@@ -99,6 +99,7 @@ jobs:
           aad_group= '${{ inputs.aad_group }}'
           app_id= '${{ inputs.app_id }}'
           aad_group_id= '${{ env.aad_group_id }}'
+          istio_onboarding= '${{ inputs.istio_onboarding }}'
 
           # Check cluster provider
           if cluster_provider != "azure" and cluster_provider != "onprem":
@@ -173,6 +174,8 @@ jobs:
                   # update AppID
                   print("Updating the patch for FinOps details.")
                   valuePatch["extraLabels"]["AppID"] = app_id
+                  if '{istio_onboarding}' == 'true':
+                  valuePatch["extraLabels"]["istio-injection"] = "enabled"
 
                   # update namespace name 
                   valuePatch["namespace"]["name"]=namespace_name                  
