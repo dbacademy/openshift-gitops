@@ -31,10 +31,10 @@ on:
         default: false
         type: boolean
       user_workload_monitor:
-          description: Enable user workload monitoring for the namespace ?  
-          required: false
-          default: false
-          type: boolean
+        description: Enable user workload monitoring for the namespace ?  
+        required: false
+        default: false
+        type: boolean
                 
         
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
