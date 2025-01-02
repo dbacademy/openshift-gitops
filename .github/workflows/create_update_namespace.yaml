@@ -175,7 +175,7 @@ jobs:
                   print("Updating the patch for FinOps details.")
                   valuePatch["extraLabels"]["AppID"] = app_id
                   if '{istio_onboarding}' == 'true':
-                  valuePatch["extraLabels"]["istio-injection"] = "enabled"
+                      valuePatch["extraLabels"]["istio-injection"] = "enabled"
 
                   # update namespace name 
                   valuePatch["namespace"]["name"]=namespace_name                  
