@@ -41,7 +41,7 @@ jobs:
           namespacename=$(kubectl get ns ${{ inputs.namespace }} -o json | jq .status.phase -r)
           if $namespacename == 'Active' ; then 
             echo "namespace status is $namespacename" >> $GITHUB_OUTPUT
-            echo "namespace already existis into cluster >> $GITHUB_OUTPUT            
+            echo "namespace already existis into cluster" >> $GITHUB_OUTPUT            
             exit 1
           fi
       - name: Test
