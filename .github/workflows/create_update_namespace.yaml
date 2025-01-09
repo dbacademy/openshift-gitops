@@ -41,7 +41,7 @@ on:
 jobs:
 
   namespace_check:
-    name: OpenShift login and test
+    name: Check if Namespae Exists
     runs-on: openshift-selfhosted-runner
 
     steps:
