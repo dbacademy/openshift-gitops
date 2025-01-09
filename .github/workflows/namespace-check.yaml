@@ -19,7 +19,7 @@ on:
 jobs:
   openshift:
     name: OpenShift login and test
-    runs-on: ocp-gh-runner
+    runs-on: openshift-selfhosted-runner
 
     steps:
       #- name: Install OpenShift Client
