@@ -56,7 +56,7 @@ jobs:
             echo "ocp_api_url=$api_url" >> $GITHUB_ENV
             sa_token=${{ secrets.OPENSHIFT_TOKEN }}      
             echo "ocp_sa_token=$sa_token" >> $GITHUB_ENV            
-          elif [[ "${{ inputs.cluster_environment }}" == "nonprod" ]];
+          elif [[ "${{ inputs.cluster_environment }}" == "nonprod" ]]; then
             api_url=${{ vars.OPENSHIFT_SERVER_VCFL_QA }}
             echo "ocp_api_url=$api_url" >> $GITHUB_ENV            
             sa_token=${{ secrets.OPENSHIFT_TOKEN_VCFL_QA }}      
