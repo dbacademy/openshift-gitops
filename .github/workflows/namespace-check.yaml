@@ -1,0 +1,45 @@
+
+# Template workflow for the OpenShift GitHub Connector
+
+name: OpenShift Login
+on:
+  workflow_dispatch:
+    inputs:
+      ocp_server:
+        description: 'Enter OCP API Server URL'
+        required: true
+      ocp_token:
+        description: 'Enter Login Token'
+        required: true
+      namespace:
+        description: 'Enter Namespace name'
+        required: true
+
+
+jobs:
+  openshift:
+    name: OpenShift login and test
+    runs-on: ocp-gh-runner
+
+    steps:
+      #- name: Install OpenShift Client
+      #  uses: redhat-actions/openshift-tools-installer@v1
+      #  with:
+      #    oc: 4
+
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ github.event.inputs.ocp_server }}
+          openshift_token: ${{ github.event.inputs.ocp_token }}
+          # if you login with secret
+          #openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+          #openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+
+      - name: Check Namespace Exists
+        run: |
+          namespacename=$(kubectl get ns ${{ inputs.namespace }} -o json | jq .status.phase -r)
+          echo "namespace status is $namespacename"
+
+      - name: Test
+        run: oc get co
