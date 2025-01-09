@@ -62,7 +62,7 @@ jobs:
             sa_token=${{ secrets.OPENSHIFT_TOKEN_VCFL_QA }}      
             echo "ocp_sa_token=$sa_token" >> $GITHUB_ENV                        
           else
-            echo "Selected environment does not existis" >> $GITHUB_OUTPUT
+            echo "Selected environment does not existis"
             exit 1
           fi
 
