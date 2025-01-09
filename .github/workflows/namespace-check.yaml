@@ -1,7 +1,7 @@
 
 # Template workflow for the OpenShift GitHub Connector
 
-name: OpenShift Login
+name: Check Openshift Namespace Exists
 on:
   workflow_dispatch:
     inputs:
