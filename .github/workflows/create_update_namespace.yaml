@@ -51,12 +51,12 @@ jobs:
       #    oc: 4
       - name: Select target cluster details
         run: |
-          if [[ ${{ inputs.cluster_environment }} == "ocp-sandbox" ]]; then
+          if [[ "${{ inputs.cluster_environment }}" == "ocp-sandbox" ]]; then
             api_url=${{ vars.OPENSHIFT_SERVER }}
             echo "ocp_api_url=$api_url" >> $GITHUB_ENV
             sa_token=${{ secrets.OPENSHIFT_TOKEN }}      
             echo "ocp_sa_token=$sa_token" >> $GITHUB_ENV            
-          elseif [[ ${{ inputs.cluster_environment }} == "nonprod" ]];
+          elif [[ "${{ inputs.cluster_environment }}" == "nonprod" ]];
             api_url=${{ vars.OPENSHIFT_SERVER_VCFL_QA }}
             echo "ocp_api_url=$api_url" >> $GITHUB_ENV            
             sa_token=${{ secrets.OPENSHIFT_TOKEN_VCFL_QA }}      
