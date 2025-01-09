@@ -40,9 +40,12 @@ jobs:
         run: |
           namespacename=$(kubectl get ns ${{ inputs.namespace }} -o json | jq .status.phase -r)
           if [[ $namespacename == "Active" ]]; then 
-            echo "namespace status is $namespacename"
-            echo "namespace already existis into cluster"
+            echo "namespace ${{ inputs.namespace }} status is $namespacename"
+            echo "namespace ${{ inputs.namespace }} already existis into cluster ${{ inputs.ocp_server }}"
             exit 1
+          else
+            echo "namespace ${{ inputs.namespace }} does not existis into cluster ${{ inputs.ocp_server }}"  
+            echo "namespace ${{ inputs.namespace }} creation will cuntinue...."
           fi
       - name: Test
         run: oc get co
