@@ -53,26 +53,28 @@ jobs:
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
-          openshift_server_url: ${{ github.event.inputs.ocp_server }}
-          openshift_token: ${{ github.event.inputs.ocp_token }}
+          #openshift_server_url: ${{ github.event.inputs.ocp_server }}
+          #openshift_token: ${{ github.event.inputs.ocp_token }}
           # if you login with secret
-          #openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-          #openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+          openshift_server_url: ${{ vars.OPENSHIFT_SERVER }}
+          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
 
       - name: Check Namespace Exists
         run: |
-          namespacename=$(kubectl get ns ${{ inputs.namespace }} -o json | jq .status.phase -r)
+          namespacename=$(kubectl get ns ${{ inputs.namespace_name }} -o json | jq .status.phase -r)
           if [[ $namespacename == "Active" ]]; then 
-            echo "namespace ${{ inputs.namespace }} status is $namespacename"
-            echo "namespace ${{ inputs.namespace }} already existis into cluster ${{ inputs.ocp_server }}"
+            echo "namespace ${{ inputs.namespace_name }} status is $namespacename"
+            echo "namespace ${{ inputs.namespace_name }} already existis into cluster ${{ vars.OPENSHIFT_SERVER }}"
             exit 1
           else
-            echo "namespace ${{ inputs.namespace }} does not existis into cluster ${{ inputs.ocp_server }}"  
-            echo "namespace ${{ inputs.namespace }} creation will cuntinue...."
+            echo "namespace ${{ inputs.namespace_name }} does not existis into cluster ${{ vars.OPENSHIFT_SERVER }}"  
+            echo "namespace ${{ inputs.namespace_name }} creation will cuntinue...."
           fi
 
   # This workflow contains a single job called "build"
   namespace_ops:
+    needs: namespace_check
     name: Create or update the namespace
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
