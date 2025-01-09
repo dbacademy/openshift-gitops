@@ -33,7 +33,7 @@ jobs:
           #openshift_server_url: ${{ github.event.inputs.ocp_server }}
           #openshift_token: ${{ github.event.inputs.ocp_token }}
           # if you login with secret
-          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+          openshift_server_url: ${{ vars.OPENSHIFT_SERVER }}
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
 
@@ -42,10 +42,10 @@ jobs:
           namespacename=$(kubectl get ns ${{ inputs.namespace }} -o json | jq .status.phase -r)
           if [[ $namespacename == "Active" ]]; then 
             echo "namespace ${{ inputs.namespace }} status is $namespacename"
-            echo "namespace ${{ inputs.namespace }} already existis into cluster ${{ env.OPENSHIFT_SERVER }}"
+            echo "namespace ${{ inputs.namespace }} already existis into cluster ${{ vars.OPENSHIFT_SERVER }}"
             exit 1
           else
-            echo "namespace ${{ inputs.namespace }} does not existis into cluster ${{ env.OPENSHIFT_SERVER }}"  
+            echo "namespace ${{ inputs.namespace }} does not existis into cluster ${{ vars.OPENSHIFT_SERVER }}"  
             echo "namespace ${{ inputs.namespace }} creation will cuntinue...."
           fi
       - name: Test
