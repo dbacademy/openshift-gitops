@@ -53,10 +53,14 @@ jobs:
         run: |
           if [[ ${{ inputs.cluster_environment }} == "ocp-sandbox" ]]; then
             api_url=${{ vars.OPENSHIFT_SERVER }}
+            echo "ocp_api_url=$api_url" >> $GITHUB_ENV
             sa_token=${{ secrets.OPENSHIFT_TOKEN }}      
+            echo "ocp_sa_token=$sa_token" >> $GITHUB_ENV            
           elseif [[ ${{ inputs.cluster_environment }} == "nonprod" ]];
             api_url=${{ vars.OPENSHIFT_SERVER_VCFL_QA }}
+            echo "ocp_api_url=$api_url" >> $GITHUB_ENV            
             sa_token=${{ secrets.OPENSHIFT_TOKEN_VCFL_QA }}      
+            echo "ocp_sa_token=$sa_token" >> $GITHUB_ENV                        
           else
             echo "Selected environment does not existis" >> $GITHUB_OUTPUT
             exit 1
@@ -68,8 +72,10 @@ jobs:
           #openshift_server_url: ${{ github.event.inputs.ocp_server }}
           #openshift_token: ${{ github.event.inputs.ocp_token }}
           # if you login with secret
-          openshift_server_url: ${{ vars.OPENSHIFT_SERVER }}
-          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+          #openshift_server_url: ${{ vars.OPENSHIFT_SERVER }}
+          #openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+          openshift_server_url: ${{ env.ocp_api_url }}
+          openshift_token: ${{ env.ocp_sa_token }}          
           insecure_skip_tls_verify: true
 
       - name: Check Namespace Exists
