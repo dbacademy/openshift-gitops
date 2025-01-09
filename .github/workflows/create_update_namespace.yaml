@@ -82,12 +82,12 @@ jobs:
         run: |
           namespacename=$(kubectl get ns ${{ inputs.namespace_name }} -o json | jq .status.phase -r)
           if [[ $namespacename == "Active" ]]; then 
-            echo "namespace ${{ inputs.namespace_name }} status is $namespacename" >> $GITHUB_OUTPUT
-            echo "namespace ${{ inputs.namespace_name }} already existis into cluster ${{ vars.OPENSHIFT_SERVER }}" >> $GITHUB_OUTPUT
+            echo "namespace ${{ inputs.namespace_name }} status is $namespacename" 
+            echo "namespace ${{ inputs.namespace_name }} already existis into cluster ${{ vars.OPENSHIFT_SERVER }}"
             exit 1
           else
-            echo "namespace ${{ inputs.namespace_name }} does not existis into cluster ${{ vars.OPENSHIFT_SERVER }}"  >> $GITHUB_OUTPUT
-            echo "namespace ${{ inputs.namespace_name }} creation will cuntinue...." >> $GITHUB_OUTPUT
+            echo "namespace ${{ inputs.namespace_name }} does not existis into cluster ${{ vars.OPENSHIFT_SERVER }}"
+            echo "namespace ${{ inputs.namespace_name }} creation will cuntinue...."
           fi
 
   # This workflow contains a single job called "build"
