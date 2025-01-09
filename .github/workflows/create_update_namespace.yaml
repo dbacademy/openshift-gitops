@@ -51,7 +51,16 @@ jobs:
       #    oc: 4
       - name: Select target cluster details
         run: |
-          if 
+          if [[ ${{ inputs.cluster_environment }} == "ocp-sandbox" ]]; then
+            api_url=${{ vars.OPENSHIFT_SERVER }}
+            sa_token=${{ secrets.OPENSHIFT_TOKEN }}      
+          elseif [[ ${{ inputs.cluster_environment }} == "nonprod" ]];
+            api_url=${{ vars.OPENSHIFT_SERVER_VCFL_QA }}
+            sa_token=${{ secrets.OPENSHIFT_TOKEN_VCFL_QA }}      
+          else
+            echo "Selected environment does not existis" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
