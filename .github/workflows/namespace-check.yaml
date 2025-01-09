@@ -33,8 +33,9 @@ jobs:
           #openshift_server_url: ${{ github.event.inputs.ocp_server }}
           #openshift_token: ${{ github.event.inputs.ocp_token }}
           # if you login with secret
-          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
 
       - name: Check Namespace Exists
         run: |
