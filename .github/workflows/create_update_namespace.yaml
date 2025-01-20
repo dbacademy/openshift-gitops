@@ -234,8 +234,9 @@ jobs:
                       del OIDCGroupMapping['{aad_group}']
 
                   # Update the AAD group ID for Argo Projet access & permission
-                  projectconfig = valuePatch["argocdproperties"]["projectconfig"]["groups"]
-                  projectconfig[aad_group_id] = "argoapp-admin"
+                  projectconfig = valuePatch["argocdproperties"]["projectconfig"]
+                  projectconfig["groups"] = [aad_group_id]
+                  #projectconfig[aad_group_id] = "argoapp-admin"
                   if '{aad_group_id}' in projectconfig:
                       del projectconfig['{aad_group_id}']                      
 

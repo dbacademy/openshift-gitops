@@ -44,7 +44,7 @@ patches:
             projectconfig:
               enabled: true
               groups:
-               "{aad_group_id}": "argoapp-admin"
+              - "{aad_group_id}"
             allowedSourceRepos:
               - "{app_repo}"
           extraLabels:
