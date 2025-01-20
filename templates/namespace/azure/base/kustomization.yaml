@@ -43,7 +43,7 @@ patches:
           argocdproperties:
             projectconfig:
               enabled: true
-              groups:
+              adgroups:
               - "{aad_group_id}"
             allowedSourceRepos:
               - "{app_repo}"
