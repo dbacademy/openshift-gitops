@@ -241,7 +241,7 @@ jobs:
 
                   # Update the Resorce Repo URL for Argo Projet source repos
                   projectRepos = valuePatch["argocdproperties"]
-                  projectRepos["allowedSourceRepos"] = app_repo                      
+                  projectRepos["allowedSourceRepos"] = [app_repo]
                       
                   # update AppID
                   print("Updating the patch for FinOps details.")
