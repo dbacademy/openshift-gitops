@@ -80,7 +80,8 @@ jobs:
 
       - name: Check Namespace Exists
         run: |
-          namespacename=$(kubectl get ns ${{ inputs.namespace_name }} -o json | jq .status.phase -r)
+          #namespacename=$(kubectl get ns ${{ inputs.namespace_name }} -o json | jq .status.phase -r)
+          namespacename=$(kubectl get ns ${{ inputs.namespace_name }} -o jsonpath='{.status.phase}' 2>/dev/null || echo "NotFound")
           if [[ $namespacename == "Active" ]]; then 
             echo "namespace ${{ inputs.namespace_name }} status is $namespacename" 
             echo "namespace ${{ inputs.namespace_name }} already existis into cluster ${{ vars.OPENSHIFT_SERVER }}"
