@@ -25,6 +25,10 @@ on:
         description: "APPID of the application which will be deployed in the namespace"
         required: true
         type: string
+      app_name:
+          description: "Application name for the namespace to be provisioned"
+          required: true
+          type: string         
       app_repo:
           description: "github repo for your App URL to be used as Source Repo"
           required: true
