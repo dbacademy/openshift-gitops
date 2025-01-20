@@ -1,0 +1,55 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+nameSuffix: namespace-132
+patches:
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Application
+      name: base-application-namespace-132
+    patch: |-
+      - op: replace
+        path: /spec/source/repoURL
+        value: https://github.com/volvo-cars/openshift-charts
+      - op: replace
+        path: /spec/project
+        value: base-application-project
+      - op: replace
+        path: /spec/source/chart
+        value: onboard-team
+      - op: replace
+        path: /spec/source/targetRevision
+        value: 1.0.2
+      - op: replace
+        path: /spec/source/helm/values
+        value: |-
+          namespace:
+            name: namespace-132
+          quota:
+            enabled: true
+            hard:
+              requests.cpu: '20'
+              requests.memory: 80Gi
+              limits.cpu: '40'
+              limits.memory: 160Gi
+          psa:
+            level: restricted
+            mode: enforce
+          rbac:
+            OIDCGroupMapping:
+              cld-openshift-clusteradmin-sg: namespace-customadmin
+          argocdproperties:
+            projectconfig:
+              enabled: true
+              groups:
+              - 2e20d898-a0c3-4643-8131-78135bd66e51
+            allowedSourceRepos:
+            - https://github.com/volvo-cars/test-repo.git
+          extraLabels:
+            AppID: APP-1234
+            istio.io/rev: default
+            istio-injection: enabled
+            component: application
+
