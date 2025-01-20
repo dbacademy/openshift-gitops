@@ -24,7 +24,11 @@ on:
       app_id:
         description: "APPID of the application which will be deployed in the namespace"
         required: true
-        type: string        
+        type: string
+      app_repo:
+          description: "github repo for your App URL to be used as Source Repo"
+          required: true
+          type: string                
       istio_onboarding:
         description: "Enable Service Istion injection for the namespace"
         required: false
