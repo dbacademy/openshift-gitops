@@ -42,7 +42,7 @@ jobs:
 
   namespace_check:
     name: Check if Namespae Exists
-    runs-on: openshift-selfhosted-runner
+    runs-on: ocp-selfhosted-runner
 
     steps:
       #- name: Install OpenShift Client
