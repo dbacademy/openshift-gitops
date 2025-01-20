@@ -46,7 +46,7 @@ patches:
               groups:
                "{aad_group_id}": "argoapp-admin"
             allowedSourceRepos:
-              - https://gitgub.com/volvo-cars/test-repo.git
+              - "{app_repo}"
           extraLabels:
             "AppID": "{app_id}" 
             "istio.io/rev": "default"

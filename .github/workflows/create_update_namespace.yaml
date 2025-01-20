@@ -161,6 +161,7 @@ jobs:
           namespace_name= '${{ inputs.namespace_name }}'
           aad_group= '${{ inputs.aad_group }}'
           app_id= '${{ inputs.app_id }}'
+          app_repo= '${{ inputs.app_repo }}'
           aad_group_id= '${{ env.aad_group_id }}'
           istio_onboarding_enabled= '${{ inputs.istio_onboarding }}'
           user_workload_monitor_enabled= '${{ inputs.user_workload_monitor }}'
@@ -237,6 +238,10 @@ jobs:
                   projectconfig[aad_group_id] = "argoapp-admin"
                   if '{aad_group_id}' in projectconfig:
                       del projectconfig['{aad_group_id}']                      
+
+                  # Update the Resorce Repo URL for Argo Projet source repos
+                  projectRepos = valuePatch["argocdproperties"]
+                  projectRepos["allowedSourceRepos"] = app_repo                      
                       
                   # update AppID
                   print("Updating the patch for FinOps details.")
