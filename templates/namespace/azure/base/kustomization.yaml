@@ -45,6 +45,10 @@ patches:
               enabled: true
               adgroups:
               - "{aad_group_id}"
+              #appviewrole:
+              #  enabled: true
+              #  adgroups:
+              #  - "{aad_group_id}"
             allowedSourceRepos:
               - "{app_repo}"
           extraLabels:
