@@ -360,7 +360,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
           git branch --show-current 
-          pr_output=$(gh pr create --title "Create/Update namespace ${{ inputs.namespace_name }} on ${{ inputs.cluster_environment }}" --body "Changes for adding/updating ${{ inputs.namespace_name }} namespace on ${{ inputs.cluster_environment }}")
+          pr_output=$(gh pr create --title "feat: Create/Update namespace ${{ inputs.namespace_name }} on ${{ inputs.cluster_environment }}" --body "Changes for adding/updating ${{ inputs.namespace_name }} namespace on ${{ inputs.cluster_environment }}")
           # Extract the pull request number from the output and print it
           pr_number=$(echo "$pr_output" | grep -oP '(?<=/pull/)\d+')      
           echo "Pull request created with number: $pr_number"
