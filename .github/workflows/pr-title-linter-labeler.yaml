@@ -1,0 +1,20 @@
+name: Lint PR Request title and add Label
+on:
+  pull_request:
+    types: [opened, ready_for_review, edited]
+
+jobs:
+  auto-filling-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint pull request title as per conventional commit types
+        # Allowed convention types are as per https://github.com/commitizen/conventional-commit-types 
+        uses: jef/conventional-commits-pr-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add labels based on PR title
+        uses: TDAK1509/set-label-based-on-pr-title@v1
+        with:
+          words: feat;fix;build;chore;ci;docs;style;refactor;perf;test
+          labels: feature;bugfix;build;chore;ci;documentation;style;refactor;perf;test
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
