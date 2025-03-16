@@ -1,0 +1,9 @@
+name: ARC Demo
+on:
+  workflow_dispatch:
+jobs:
+  Explore-GitHub-Actions:
+    # You need to use the INSTALLATION_NAME from the previous step
+    runs-on: github-arc-runners
+    steps:
+    - run: echo "🎉 This job uses runner scale set runners on OpenShift!"
